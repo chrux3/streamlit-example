@@ -11,7 +11,6 @@ credentials = service_account.Credentials.from_service_account_info(
         "https://www.googleapis.com/auth/spreadsheets",
     ],
 )
-conn = connect(credentials=credentials)
 
 # Perform SQL query on the Google Sheet.
 # Uses st.cache to only rerun when the query changes or after 10 min.
@@ -26,7 +25,7 @@ conn = connect(credentials=credentials)
 
 st.title("Connect to Google Sheets")
 gsheet_url = st.secrets["private_gsheets_url"]
-conn = connect()
+conn = connect(credentials=credentials)
 rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 df_gsheet = pd.DataFrame(rows)
 st.write(df_gsheet)
