@@ -22,12 +22,16 @@ credentials = service_account.Credentials.from_service_account_info(
 ## 
 ## sheet_url = st.secrets["private_gsheets_url"]
 ## rows = run_query(f'SELECT * FROM "{sheet_url}"')
+conn = connect(credentials=credentials)
 
+def run_query():
+    gsheet_url = st.secrets["private_gsheets_url"]
+    rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
+    return rows
 
 st.title("Connect to Google Sheets")
-gsheet_url = st.secrets["private_gsheets_url"]
-conn = connect(credentials=credentials)
-rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
+
+rows = run_query()
 df_gsheet = pd.DataFrame(rows)
 st.write(df_gsheet)
 
