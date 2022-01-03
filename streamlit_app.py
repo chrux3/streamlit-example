@@ -24,7 +24,6 @@ credentials = service_account.Credentials.from_service_account_info(
 ## rows = run_query(f'SELECT * FROM "{sheet_url}"')
 conn = connect(credentials=credentials)
 
-@st.cache(allow_output_mutation=True)
 def run_query():
     gsheet_url = st.secrets["private_gsheets_url"]
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
